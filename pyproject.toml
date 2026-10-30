@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "portable-ptv3"
+version = "0.1.0"
+description = "Point Transformer V3 without spconv, torch_scatter or flash_attn: fused Triton kernels, ONNX export, NumPy + ONNX Runtime inference"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+torch = ["torch>=2.4", "triton>=3.0; platform_system == 'Linux'"]
+onnx = ["onnxruntime>=1.18"]
+export = ["torch>=2.6", "onnx>=1.17", "onnxscript>=0.2"]
+data = ["huggingface_hub>=0.20"]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+include = ["ptv3*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests", "."]
